@@ -10,3 +10,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 Dani's changes
+```{r}
+library(tidyverse)
+gc_df <-read_csv("gc_df.csv")
+```
+
+```{r}
+get_guns <- gc_df %>%
+  filter(gender != "NA", make_get_guns != "NA") %>%
+  count(gender, make_get_guns)
+```
+
