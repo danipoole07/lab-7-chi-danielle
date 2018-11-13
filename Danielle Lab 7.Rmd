@@ -10,12 +10,21 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 Dani's changes
-```{r}
+```{r, include = FALSE} 
 library(tidyverse)
 gc_df <-read_csv("gc_df.csv")
 ```
+JKM Changes
+
+We are asking: Is there a significant difference in recommended gun control 
+action for male and female respondents (should guns be easier, harder, or 
+the same difficulty to get)?
+
+Data wrangling and counts
 
 ```{r}
+# Dani did this. Not JKM.
+
 get_guns <- gc_df %>%
   filter(gender != "NA", make_get_guns != "NA") %>%
   count(gender, make_get_guns) %>%
@@ -26,4 +35,33 @@ rownames(get_guns) <-c("Female", "Male")
 
 get_guns
 ```
+
+Hi! My name is JKM the collaborator! Here goes our chi-square test for independence!
+
+We ask: "Is there a significant association between sex and opinion on whether guns should be more difficult, easier, or the same difficulty to get?"
+
+```{r}
+### Chi-square test for independence (what are proportions?)
+
+# First, let's look at the actual proportions
+
+guns_prop <- prop.table(as.matrix(get_guns), 1)
+guns_prop
+
+# Run chi-square test for independence from contingency table
+
+guns_x2 <- chisq.test(get_guns)
+guns_x2
+
+# H0: No significant difference
+
+```
+
+"Recommended government action on gun access differed significantly between male (n = ) and female (n = ) respondents ($\chi^2$(`r guns_x2$parameter`) = ..... p < 0.001. Notably, a much higher proportioin of female respondents (57.4%) recommend making it more difficult to get guns, compared to 40.4% of male respondents."
+
+
+
+
+
+
 
